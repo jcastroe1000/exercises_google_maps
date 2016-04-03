@@ -18,13 +18,14 @@
 var map;
 var infowindow;
 function initMap() {
+  //ubicamos el centro de la ciudad de mexico
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 19.4336726, lng: -99.1454316},
     zoom: 15
   });
   var infoWindow = new google.maps.InfoWindow({map: map});
 
-  // Try HTML5 geolocation.
+  
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
@@ -37,13 +38,12 @@ function initMap() {
       map.setCenter(pos);
 
   infowindow = new google.maps.InfoWindow();
-
+  //tomamos la posicion por medio de la geolocalizacion y tomamos un radio de 200
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch({
     location: pos,
-    radius: 300,
-    
-    types: ['food']
+    radius: 200,
+    types: ['restaurant','food']
   }, callback);
 
 
