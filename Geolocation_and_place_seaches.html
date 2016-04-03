@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Place searches</title>
+    <title>Geolocation and Place searches</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -11,7 +11,10 @@
         padding: 0;
       }
       #map {
-        height: 100%;
+        height: 70%;
+        width: 70%;
+        margin-top: 5%;
+        margin-left: 10%;  
       }
     </style>
     <script>
@@ -72,7 +75,7 @@ function createMarker(place) {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
-    // Browser doesn't support Geolocation
+ 
     handleLocationError(false, infoWindow, map.getCenter());
   }
 }
@@ -80,13 +83,14 @@ function createMarker(place) {
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
   infoWindow.setContent(browserHasGeolocation ?
-                        'Error: The Geolocation service failed.' :
-                        'Error: Your browser doesn\'t support geolocation.');
+                        'Error: El servicio de geolocalizacion a fallado.' :
+                        'Error: El navegador web no soporta la geolocalizacion.');
 }
 
     </script>
   </head>
   <body>
+    <h2 style="margin-left: 50px">primero se activa la geolocalización y despues dependiendo de tu ubicación te regresa o te muestra los restaurantes más cercanos</h2>
     <div id="map"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzcakrXitKZwYBu078vsb2LyfVXgq0mwM&signed_in=true&libraries=places&callback=initMap" async defer></script>
   </body>

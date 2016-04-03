@@ -11,7 +11,8 @@
         padding: 0;
       }
       #map {
-        height: 100%;
+        height: 70%;
+        width: 70%;
       }
 .controls {
   margin-top: 10px;
@@ -24,7 +25,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-#pac-input {
+#search_place {
   background-color: #fff;
   font-family: Roboto;
   font-size: 15px;
@@ -35,7 +36,7 @@
   width: 300px;
 }
 
-#pac-input:focus {
+#search_place:focus {
   border-color: #4d90fe;
 }
 
@@ -78,8 +79,8 @@ function initMap() {
       infoWindow.setPosition(pos);
       infoWindow.setContent('Tu te encuentras aqui.');
       map.setCenter(pos);
-      var input = /** @type {!HTMLInputElement} */(
-      document.getElementById('pac-input'));
+      var input = (
+      document.getElementById('search_place'));
 
   var types = document.getElementById('type-selector');
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -99,18 +100,16 @@ function initMap() {
     marker.setVisible(false);
     var place = autocomplete.getPlace();
     if (!place.geometry) {
-      window.alert("Autocomplete's returned place contains no geometry");
+      window.alert("El lugar que se regreso , no contiene geometria");
       return;
     }
-
-    // If the place has a geometry, then present it on a map.
     if (place.geometry.viewport) {
       map.fitBounds(place.geometry.viewport);
     } else {
       map.setCenter(place.geometry.location);
-      map.setZoom(17);  // Why 17? Because it looks good.
+      map.setZoom(15); 
     }
-    marker.setIcon(/** @type {google.maps.Icon} */({
+    marker.setIcon(({
       url: place.icon,
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
@@ -132,24 +131,17 @@ function initMap() {
     infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
     infowindow.open(map, marker);
   });
-
-  // Sets a listener on a radio button to change the filter type on Places
-  // Autocomplete.
-  function setupClickListener(id, types) {
+    function setupClickListener(id, types) {
     var radioButton = document.getElementById(id);
     radioButton.addEventListener('click', function() {
       autocomplete.setTypes(types);
     });
   }
-
-  
-  setupClickListener('changetype-establishment', ['establishment']);
- 
+    setupClickListener('establishment', ['establishment']);
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
-    // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
 }
@@ -157,8 +149,8 @@ function initMap() {
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
   infoWindow.setContent(browserHasGeolocation ?
-                        'Error: The Geolocation service failed.' :
-                        'Error: Your browser doesn\'t support geolocation.');
+    'Error: El servicio de geolocalizacion a fallado.' :
+    'Error: el navegador web no soporta el servicio de geolocalizacion.');
 }
 
     </script>
@@ -166,18 +158,14 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   
   </head>
   <body>
-    <input id="pac-input" class="controls" type="text"
+    <input id="search_place" class="controls" type="text"
         placeholder="Enter a location">
     <div id="type-selector" class="controls">
-      
-
-      <input type="radio" name="type" id="changetype-establishment">
-      <label for="changetype-establishment">Establecimientos</label>
-
-     
+    <input type="radio" name="type" id="establishment">
+        <label for="establishment">Establecimientos</label>
     </div>
     <div id="map"></div>
-    
+    <h2 style="margin-left: 50px">De nuevo se activa la geolocalización y despues podras buscar en lugar de tu preferencia,<br> se base primero en los lugares cercanos a ti.</h2>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzcakrXitKZwYBu078vsb2LyfVXgq0mwM&signed_in=true&libraries=places&callback=initMap" async defer></script>
   </body>
 </html>
