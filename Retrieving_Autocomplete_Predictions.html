@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Retrieving Autocomplete Predictions</title>
+
+</head>
+<body>
+  <div id="right-panel">
+    <p>Consultar sugerencias de comida</p>
+    <input type="text" id="search_food" name="search_food"></input>
+    <button onclick="initService()">Buscar </button>
+
+    <ul id="results"></ul>
+  </div>
+  <script>
+
+
+function initService() {
+  
+  var displaySuggestions = function(predictions, status) {
+    if (status != google.maps.places.PlacesServiceStatus.OK) {
+      alert(status);
+      return;
+    }
+
+    predictions.forEach(function(prediction) {
+      var li = document.createElement('li');
+      li.appendChild(document.createTextNode(prediction.description));
+      document.getElementById('results').appendChild(li);
+    });
+  };
+  var busqueda=document.getElementById('search_food').value;
+  
+  var service = new google.maps.places.AutocompleteService();
+  service.getQueryPredictions({ input: busqueda }, displaySuggestions);
+}
+
+  </script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzcakrXitKZwYBu078vsb2LyfVXgq0mwM&signed_in=true&libraries=places&callback=initService"
+      async defer></script>
+</body>
+</html>
